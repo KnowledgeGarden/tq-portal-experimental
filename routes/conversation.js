@@ -85,6 +85,7 @@ exports.plugin = function(app, environment) {
           return res.render("conversationindex", json);
       });
     });
+
     app.get("/convprev/:id", helpers.isPrivate, function(req, res) {
       var start = parseInt(req.params.id),
           count = Constants.MAX_HIT_COUNT;
@@ -114,6 +115,64 @@ exports.plugin = function(app, environment) {
           }
           return res.render("conversationindex", json);
       });
+    });
+
+    /**
+     * AJAX fetch for MillerColumn
+     */
+    app.get('/conversation/ajax/:id', helpers.isPrivate, function(req, res) {
+        var q = req.params.id,
+            contextLocator = req.query.contextLocator,
+            route = '/conversation/ajax/',
+            lang = req.params.language,
+            data = environment.getCoreUIData(req);
+        if (!lang) {
+            lang = "en";
+        }
+        data.language = lang;
+        if (!contextLocator) {
+            contextLocator = q;
+        }
+        console.log("GETCONx "+q+" "+contextLocator);
+        if (q) {
+            var userId = helpers.getUserId(req), //req.session[Constants.USER_ID],
+                userIP = "",
+                theUser = helpers.getUser(req),
+                sToken = req.session[Constants.SESSION_TOKEN];
+            CommonModel.fetchTopic(q, userId, userIP, sToken, function bFT(err, rslt) {
+                var data =  environment.getCoreUIData(req),
+                    language = "en"; // TODO
+                data.language = language;
+                if (rslt.cargo) {
+                    CommonModel.populateConversationTopic(rslt.cargo, contextLocator, theUser, "/conversation/", userIP, sToken,
+                            data, function bC(err, rslt) {
+                    data = rslt;
+                    console.log("BOOBOOBOO "+JSON.stringify(data));
+                    helpers.checkContext(req, data);
+                    helpers.checkTranscludes(req, data);
+                    //data for response buttons
+                    data.locator = q;
+                    if (contextLocator && contextLocator !== "") {
+                        data.context = contextLocator;
+                    } else {
+                        data.context = q; // we are talking about responding to this blog
+                    }
+                    // deal with editing
+                    var canEdit = false;
+                    console.log("CANEDIT "+userId+" | "+data.userid+" | "+data.isAdmin);
+                    if (helpers.isLoggedIn) {
+                        if (userId === data.userid || data.isAdmin) {
+                            canEdit = true;
+                        }
+                    }
+                    data.canEdit = canEdit;
+                    data.editurl = "/conversationedit/"+q;
+                    //TODO MillerColumn
+                    //return res.render("ctopic", data);
+                });
+            } else {
+                //TODO error
+            }
     });
 
     app.get("/conversation/:id", helpers.isPrivate, function(req, res) {

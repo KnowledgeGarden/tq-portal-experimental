@@ -33,23 +33,28 @@ MillerColumn = module.exports = function(environment) {
         }
         return result;
     };
+
     /**
      * Make a given node and add it to <code>buf</code>
      * @param node
      * @param language
      * @param javascript function
-     * @param app  e.g. "/conversation/ajaxfetch/"
+     * @param app  e.g. "/conversation/ajax/"
      * @param aux e.g. "" or "&foo=bar"
-     * @param buf
+     * @param buf a StringBuffer
      * @param contextLocator
      * @param rootNodeLocator
      */
-    function __makeNodeHTML(node, language, javascript, app, aux, buf, contextLocator,
-              rootNodeLocator) {
+    function __makeNodeHTML(node, language, javascript, app, aux, 
+            buf, contextLocator, rootNodeLocator) {
         console.log("ColNavWidget.__makeNodeHTML "+JSON.stringify(node)+" "+buf);
         //TODO modify this to deal with JSON
         buf.append("<li id=\""+node.lox+"\"><a class=\"nodehref\" href=\"");
-        var query = javascript+"('"+node.lox+"', '"+app+node.lox+"?contextLocator="+contextLocator+"&rootLocator="+rootNodeLocator+"&language="+language+aux+"')\"";        buf.append(query+" ondblclick =\"doDoubleClick();\">");
+        var query = javascript+"('"+node.lox+"', '"+app+node.lox+
+            "?contextLocator="+contextLocator+
+            "&rootLocator="+rootNodeLocator+
+            "&language="+language+aux+"')\"";
+        buf.append(query+" ondblclick =\"doDoubleClick();\">");
         buf.append("<img src=\""+node.sIco+"\" class=\"nodeimg\"> ");
         title = node.label; //TODO getLabel(constants.ENGLISH);
         if (!title) {
@@ -70,7 +75,7 @@ MillerColumn = module.exports = function(environment) {
      * @param contextLocator
      * @param language
      * @param javascript
-     * @param app
+     * @param app '/conversation/ajax/
      * @param buf  a StringBuilder
      * @param userId
      * @param userIP
@@ -145,7 +150,7 @@ MillerColumn = module.exports = function(environment) {
      * @contextLocator if "", then takes all child contexts
      * @param language
      * @param javascript
-     * @param app  e.g. /conversation/ajaxfetch/
+     * @param app   /conversation/ajax/
      * @param aux e.g. "" or "&foo=bar"
      * @param userId
      * @param userIP

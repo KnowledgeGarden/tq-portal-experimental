@@ -1,38 +1,39 @@
-    <link rel="stylesheet" href="/css/jquery-ui.css" type="text/css" media="all" />
-    <link rel="stylesheet" href="/css/conversation.css" type="text/css" media="all" />
-    <script type="text/javascript" src = "/js/jquery.scrollTo.js"></script>
-    <script type="text/javascript" src="/js/jquery-columnnav-1.1.0.js"></script>
-    <script type="text/javascript" src="/js/jquery-ui.min.js"></script>
-    <script type="text/javascript">
-        //<![CDATA[
-        $(document).ready(function() {
-            $("ul#myTree").columnNavigation({
-                containerPosition:"relative",
-                containerWidth:"100%",
-                containerHeight:"210px",
-                containerBackgroundColor:"rgb(255,255,255)",
-                containerFontColor:"rgb(50,50,50)",
-                columnWidth:300,
-                columnFontFamily:"'Helvetica Neue', 'HelveticaNeue', Helvetica, sans-serif",
-                columnFontSize:"90%",
-                columnSeperatorStyle:"1px solid rgb(220,220,220)",
-                columnDeselectFontWeight:"normal",
-                columnDeselectColor:"rgb(50,50,50)",
-                columnSelectFontWeight:"normal",
-                columnSelectColor:"rgb(255,255,255)",
-                columnSelectBackgroundColor:"rgb(27,115,213)",
-                columnSelectBackgroundPosition:"top",
-                columnItemPadding:"3px 3px 5px 3px",
-                columnScrollVelocity:50,
-                callBackFunction    :  function(f) {
-                   // loadnodes( f.attr("href") );
-                   alert(f);
-                }
-            });
-
+<link rel="stylesheet" href="/css/jquery-ui.css" type="text/css" media="all" />
+<link rel="stylesheet" href="/css/conversation.css" type="text/css" media="all" />
+<script type="text/javascript" src = "/js/jquery.scrollTo.js"></script>
+<script type="text/javascript" src="/js/jquery-columnnav-1.1.0.js"></script>
+<script type="text/javascript" src="/js/jquery-ui.min.js"></script>
+<script type="text/javascript">
+    //<![CDATA[
+    $(document).ready(function() {
+        $("ul#myTree").columnNavigation({
+            containerPosition:"relative",
+            containerWidth:"100%",
+            containerHeight:"210px",
+            containerBackgroundColor:"rgb(255,255,255)",
+            containerFontColor:"rgb(50,50,50)",
+            columnWidth:300,
+            columnFontFamily:"'Helvetica Neue', 'HelveticaNeue', Helvetica, sans-serif",
+            columnFontSize:"90%",
+            columnSeperatorStyle:"1px solid rgb(220,220,220)",
+            columnDeselectFontWeight:"normal",
+            columnDeselectColor:"rgb(50,50,50)",
+            columnSelectFontWeight:"normal",
+            columnSelectColor:"rgb(255,255,255)",
+            columnSelectBackgroundColor:"rgb(27,115,213)",
+            columnSelectBackgroundPosition:"top",
+            columnItemPadding:"3px 3px 5px 3px",
+            columnScrollVelocity:50,
+            callBackFunction    :  function(f) {
+                // loadnodes( f.attr("href") );
+                alert(f);
+            }
         });
-        //]]>
-    </script>
+        <!-- TODO cleanup this because we will paint the tree on
+            page boot -->
+    });
+    //]]>
+</script>
 <div class="col-xs-12">
   <ul class="nav nav-tabs">
       <li class="active"><a data-toggle="tab" href="#meta">MetaRoom</a></li>
@@ -44,6 +45,7 @@
   </ul>
 
   <div class="tab-content">
+      <!-- game room where the guild meets -->
       <div id="meta" class="tab-pane fade in active">
         <table width="100%">
           <tr>
@@ -81,24 +83,26 @@
           </tr>
         </table>
       </div>
+      <!-- view of the game move tree itself -->
       <div id="tree" class="tab-pane fade">
         <h2>Game Tree Goes Here</h2>
       </div>
+      <!-- guild roster -->
       <div id="roster" class="tab-pane fade">
         <h2>Roster</h2>
         {{#each members}}
           <a href="/user/{{lox}}"><img src="{{sIco}}"> {{label}}</a><br/>
         {{/each}}
       </div>
+      <!-- guild leader controls -->
       <div id="leader" class="tab-pane fade">
         <h2>Leader Activities</h2>
         <div class="form-group">
             <a href="/selectrootnode/{{guildId}}" class="btn btn-large btn-primary">Select Root Node</a><br/><br/>
             <a href="/playmoves/{{guildId}}" class="btn btn-large btn-primary">Play Moves</a>
-            <!--TPDP add forms for adding/removing leaders/members -->
+            <!--TODO add forms for adding/removing leaders/members -->
         </div>
       </div>
   </div>
-
 </div>
 

@@ -654,13 +654,13 @@ CommonModel =  module.exports = function(environment) {
      * @param jsonTopic
      * @param contextLocator
      * @param user\
-     * @param app e.g. 'blog' //TODO do we need this?
+     * @param app e.g. '/conversation/ajax/' //required like that
      * @param data core UI data
      * @callback signature (err, rslt)
      */
     self.populateGuildConversation = function(jsonTopic, contextLocator, user, app, userIP,
         sToken, data, callback) {
-    console.log("POPGUILDCON- "+JSON.stringify(jsonTopic));
+        console.log("POPGUILDCON- "+JSON.stringify(jsonTopic));
       var myResult = self.populateTopic(jsonTopic, user, data);
       console.log('POPGUILDCON '+JSON.stringify(myResult));
       var language = "en", //TODO
@@ -669,6 +669,7 @@ CommonModel =  module.exports = function(environment) {
       //POPULATE the MillerColumn
       //TODO this requires a javascript way to paint the widgets
       ///////////////////////////
+      // see /public/js/conversation.js
       var js = "javascript:fetchFromTree";
       var neighborhood = populateNeighborhood(jsonTopic);
       myResult.neighborhood = neighborhood;
@@ -682,4 +683,6 @@ CommonModel =  module.exports = function(environment) {
           return callback(undefined, myResult);
       }); 
   };
+
+
 };
