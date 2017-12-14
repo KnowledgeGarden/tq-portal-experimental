@@ -1,0 +1,104 @@
+    <link rel="stylesheet" href="/css/jquery-ui.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="/css/conversation.css" type="text/css" media="all" />
+    <script type="text/javascript" src = "/js/jquery.scrollTo.js"></script>
+    <script type="text/javascript" src="/js/jquery-columnnav-1.1.0.js"></script>
+    <script type="text/javascript" src="/js/jquery-ui.min.js"></script>
+    <script type="text/javascript">
+        //<![CDATA[
+        $(document).ready(function() {
+            $("ul#myTree").columnNavigation({
+                containerPosition:"relative",
+                containerWidth:"100%",
+                containerHeight:"210px",
+                containerBackgroundColor:"rgb(255,255,255)",
+                containerFontColor:"rgb(50,50,50)",
+                columnWidth:300,
+                columnFontFamily:"'Helvetica Neue', 'HelveticaNeue', Helvetica, sans-serif",
+                columnFontSize:"90%",
+                columnSeperatorStyle:"1px solid rgb(220,220,220)",
+                columnDeselectFontWeight:"normal",
+                columnDeselectColor:"rgb(50,50,50)",
+                columnSelectFontWeight:"normal",
+                columnSelectColor:"rgb(255,255,255)",
+                columnSelectBackgroundColor:"rgb(27,115,213)",
+                columnSelectBackgroundPosition:"top",
+                columnItemPadding:"3px 3px 5px 3px",
+                columnScrollVelocity:50,
+                callBackFunction    :  function(f) {
+                   // loadnodes( f.attr("href") );
+                   alert(f);
+                }
+            });
+
+        });
+        //]]>
+    </script>
+<div class="col-xs-12">
+  <ul class="nav nav-tabs">
+      <li class="active"><a data-toggle="tab" href="#meta">MetaRoom</a></li>
+      <li><a data-toggle="tab" href="#tree">GameTree</a></li>
+      <li><a data-toggle="tab" href="#roster">Roster</a></li>
+      {{#if isGuildLeader}}
+        <li><a data-toggle="tab" href="#leader">Leader</a></li>
+      {{/if}}
+  </ul>
+
+  <div class="tab-content">
+      <div id="meta" class="tab-pane fade in active">
+        <table width="100%">
+          <tr>
+            <td>
+                <ul id="myTree">
+                    <v:root></v:root>
+                </ul>
+            </td>
+          </tr>
+        
+          <tr><td><h2>Selected Node</h2></td></tr>
+          <tr>
+            <td  width="100%">
+                <div id="imglabel"></div>
+                <div id="authorname"></div>
+                <div id="datetime"></div>
+                <div id="permalink"></div>
+                <ul class="nav nav-tabs">
+                  <li class="active"><a data-toggle="tab" href="#tabs-1">Details</a></li>
+                  <li><a data-toggle="tab" href="#tabs-2">Edit</a></li>
+                  <li><a data-toggle="tab" href="#tabs-3">Respond</a></li>
+                </ul>
+                <div class="tab-content"">
+                    <div id="tabs-1">
+
+                    </div>
+                    <div id="tabs-2">
+                      <div id="tab2" ></div>
+ 					          </div>
+                    <div id="tabs-3">
+                        <div id="tab3" ></div>
+                    </div>
+                </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="tree" class="tab-pane fade">
+        <h2>Game Tree Goes Here</h2>
+      </div>
+      <div id="roster" class="tab-pane fade">
+        <h2>Roster</h2>
+        {{#each members}}
+          <a href="/user/{{lox}}"><img src="{{sIco}}"> {{label}}</a><br/>
+        {{/each}}
+      </div>
+      <div id="leader" class="tab-pane fade">
+        <h2>Leader Activities</h2>
+        <div class="form-group">
+            <a href="/selectrootnode/{{guildId}}" class="btn btn-large btn-primary">Select Root Node</a><br/><br/>
+            <a href="/playmoves/{{guildId}}" class="btn btn-large btn-primary">Play Moves</a>
+            <!--TPDP add forms for adding/removing leaders/members -->
+        </div>
+      </div>
+  </div>
+
+</div>
+

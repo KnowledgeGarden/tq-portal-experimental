@@ -1,0 +1,43 @@
+<div class="home col-xs-12 ">
+  <h2><img src="{{lIco}}" > {{label}}</h2>
+  {{#if isRealUser}}
+    <div class="userref">
+        <a href="/user/{{username}}">Creator</a>&nbsp;&nbsp;{{date}}<br/>
+    </div>
+  {{/if}}
+  {{#if url}}
+    <div class="urlref"><b>Homepage</b>: <a href="{{url}}">{{url}}</a></div><br/>
+  {{/if}}
+
+  <ul class="nav nav-tabs">
+      <li class="active"><a data-toggle="tab" href="#topic">Topic</a></li>
+      <li><a data-toggle="tab" href="#list">List View</a></li>
+<!--      <li><a data-toggle="tab" href="#pivots">Pivots</a></li> -->
+      <li><a data-toggle="tab" href="#source">Source</a></li>
+  </ul>
+
+  <div class="tab-content">
+    <div id="topic" class="tab-pane fade in active">
+      {{#if canEdit}}
+        <a href='{{editurl}}'>Edit</a><br/>
+      {{/if}}
+      <div class="body pre-scrollable span12" style="border: 1px solid #e1e1e8; resize:both;overflow: auto;">
+        {{{details}}}
+      </div>
+      {{> pivots_wide}}
+    </div> <!-- /topic -->
+    <div id="pivots" class="tab-pane fade">
+    </div>
+    <div id="list" class="tab-pane fade">
+      {{#if canEdit}}
+        <a href='{{editurl}}'>Edit</a><br/>
+      {{/if}}
+      <div class="body pre-scrollable" style="border: 1px solid #e1e1e8; esize:both;overflow: auto;">{{{details}}}</div>
+      {{> pivots}}
+    </div> <!-- /list -->
+
+    <div id="source" class="tab-pane fade">
+      <div class="sourcecode">{{source}}</div>
+    </div>
+  </div>
+</div>
