@@ -146,33 +146,38 @@ exports.plugin = function(app, environment) {
                 if (rslt.cargo) {
                     CommonModel.populateConversationTopic(rslt.cargo, contextLocator, theUser, "/conversation/", userIP, sToken,
                             data, function bC(err, rslt) {
-                    data = rslt;
-                    console.log("BOOBOOBOO "+JSON.stringify(data));
-                    helpers.checkContext(req, data);
-                    helpers.checkTranscludes(req, data);
-                    //data for response buttons
-                    data.locator = q;
-                    if (contextLocator && contextLocator !== "") {
-                        data.context = contextLocator;
-                    } else {
-                        data.context = q; // we are talking about responding to this blog
-                    }
-                    // deal with editing
-                    var canEdit = false;
-                    console.log("CANEDIT "+userId+" | "+data.userid+" | "+data.isAdmin);
-                    if (helpers.isLoggedIn) {
-                        if (userId === data.userid || data.isAdmin) {
-                            canEdit = true;
+                        data = rslt;
+                        console.log("BOOBOOBOO "+JSON.stringify(data));
+                        helpers.checkContext(req, data);
+                        helpers.checkTranscludes(req, data);
+                        //data for response buttons
+                        data.locator = q;
+                        if (contextLocator && contextLocator !== "") {
+                            data.context = contextLocator;
+                        } else {
+                            data.context = q; // we are talking about responding to this blog
                         }
-                    }
-                    data.canEdit = canEdit;
-                    data.editurl = "/conversationedit/"+q;
-                    //TODO MillerColumn
-                    //return res.render("ctopic", data);
-                });
-            } else {
-                //TODO error
-            }
+                        // deal with editing
+                        var canEdit = false;
+                        console.log("CANEDIT "+userId+" | "+data.userid+" | "+data.isAdmin);
+                        if (helpers.isLoggedIn) {
+                            if (userId === data.userid || data.isAdmin) {
+                                canEdit = true;
+                            }
+                        }
+                        data.canEdit = canEdit;
+                        data.editurl = "/conversationedit/"+q;
+                        //TODO MillerColumn
+                        //return res.render("ctopic", data);
+                    });
+                } else {
+                    //TODO error
+                }
+            });
+                     
+        } else {
+            //TODO
+        }
     });
 
     app.get("/conversation/:id", helpers.isPrivate, function(req, res) {
