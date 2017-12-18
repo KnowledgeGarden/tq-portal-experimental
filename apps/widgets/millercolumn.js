@@ -1,5 +1,6 @@
 /**
  * Created by park on 1/13/2016.
+ * Given a conversation tree in JSON, create that tree in HTML
  */
 var Sb = require("../stringbuilder"),
     Constants = require("../constants"),
@@ -33,7 +34,15 @@ MillerColumn = module.exports = function(environment) {
         }
         return result;
     };
-
+//////////////////////////////////////
+// A view looks like:
+// <li id="lox">
+//  <a href="javascript:fetchFromTree("lox,
+//      )">
+//      <img src="<image src>" class="nodeimg">label</a>
+//  if no children, ends with </li>
+// Otherwise, followed by child views
+//////////////////////////////////////
     /**
      * Make a given node and add it to <code>buf</code>
      * @param node
@@ -49,6 +58,20 @@ MillerColumn = module.exports = function(environment) {
             buf, contextLocator, rootNodeLocator) {
         console.log("ColNavWidget.__makeNodeHTML "+JSON.stringify(node)+" "+buf);
         //TODO modify this to deal with JSON
+        ///////////////////////////////////
+        //This system needs to track the context in which a node is viewed
+        //That is because a given node might be viewed as a child in a particular
+        //  context, meaning, in a particular conversation
+        //Presently, context is based on the root node identifier of a
+        //  conversation -- TODO: that is weak in the sense that the same
+        //  node might, conceivably, be used more than once in different places
+        //  of the conversation (unlikely, but not out of the question).
+        //In any case we must pass along the context in a query.
+        //In fact, we pass both the context -- which might be the local parent
+        //  node id in this case as well as rootNodeLocator
+        //Unfortunately, CommonModel.makeColNav passes in the same value for
+        //  both contextLocator and rootNodeLocator
+        ////////////////////////////////////
         buf.append("<li id=\""+node.lox+"\"><a class=\"nodehref\" href=\"");
         var query = javascript+"('"+node.lox+"', '"+app+node.lox+
             "?contextLocator="+contextLocator+

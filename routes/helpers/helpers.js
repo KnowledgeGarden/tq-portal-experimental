@@ -60,6 +60,8 @@ Helpers =  module.exports = function (environment) {
         return result;
     };
 
+    //TODO should this return null or something like "guest"?
+    //That must be checked against BacksideServer's expectations
     self.getUserId = function(req) {
       var u = self.getUser(req);
       if (u) {

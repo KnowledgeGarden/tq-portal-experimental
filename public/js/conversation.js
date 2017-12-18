@@ -16,6 +16,7 @@ function paintColNav(data) {
     $("ul#myConTree").html(html);
 }
 
+//ajax
 function getConversationNode(query) {
 	alert("XX "+query);
     $.get( query, function( data ) {
@@ -47,6 +48,7 @@ function getConversationNode(query) {
     });
 }
 
+// called from common_model.js when navigating the MillerColumn
 function fetchFromTree(lox, quex) {
     locator = lox;
     query = quex;

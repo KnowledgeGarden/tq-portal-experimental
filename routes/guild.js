@@ -21,7 +21,8 @@
  //     Playing > 1 quest at a time
  //////////////////////
 var Constants = require("../apps/constants"),
-    Help = require("./helpers/helpers");
+    Help = require("./helpers/helpers"),
+    testdata = require("./helpers/testdata");
 const LEADER = "_L",
       OWNER_LEADER = "_OL";
 
@@ -151,18 +152,27 @@ exports.plugin = function(app, environment) {
               sToken = req.session[Constants.SESSION_TOKEN],
               canJoin = true;
           CommonModel.fetchTopic(q, userId, userIP, sToken, function uFT(err, rslt) {
-              var data =  environment.getCoreUIData(req);
+              var data =  environment.getCoreUIData(req),
+                  needMeta = false;
               if (rslt.cargo) {
                   data = CommonModel.populateTopic(rslt.cargo, theUser, data);
                   if (data.isAuthenticated) {
                     var isLeader = userIsLeader(q, theUser);
                     if (isLeader) {
                       canJoin = false;
-                      data.isGuildMember = true;
+                      data.isGuildMember = true; //enables incubator tab
                       data.isGuildLeader = true;
+                      needMeta = true;
                     } else if (userIsMember(q, theUser)) {
                       canJoin = false;
-                      data.isGuildMember = true;
+                      data.isGuildMember = true; // enables incubator tab
+                      needMeta = true;
+                    }
+                    //TODO test painting tree
+                    data.myTree = testdata;
+                    if (needMeta) {
+                      //TODO paint the guild's incubator data
+                      // including data.myTree, data.members (roster)
                     }
                   } else {
                     //not authenticated

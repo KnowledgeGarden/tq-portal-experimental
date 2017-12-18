@@ -1,0 +1,39 @@
+<div class="col-xs-12">
+    <div>
+        <h3>Select a Response Node Type</h3>
+        <form onsubmit="nodeSelected()">
+            <table border="1">
+                <tr>
+                <td>
+                    <input type="radio" name="question" onclick="nodeSelected('question')" value="question"><img title="New Question" src="/images/ibis/issue.png"><br>
+                </td>
+                <td>
+                    <input type="radio" name="answer" onclick="nodeSelected('answer')" value="answer"><img title="New Answer" src="/images/ibis/position.png"><br>
+                </td>
+                <td>
+                   <input type="radio" name="pro" onclick="nodeSelected('pro')" value="pro"><img title="New Pro Argument" src="/images/ibis/plus.png"><br>
+                </td>
+                <td>
+                   <input type="radio" name="con" onclick="nodeSelected('con')" value="con"><img title="New Con Argument" src="/images/ibis/minus.png"><br>
+                </td>
+                <td>
+                   <input type="radio" name="ref" onclick="nodeSelected('ref')" value="ref"><img title="New Reference Link" src="/images/ibis/reference.png"><br>
+                </td>
+                </tr>
+            </table> 
+        </form>
+
+
+    </div>
+    <div id="metaform" style="display: none;">
+        FOO
+    </div>
+</div>
+<script>
+    function nodeSelected(type) {
+        var x = document.getElementById("metaform");
+        x.style.display = "block";
+        alert(type);
+        <!--TODO figure out how to remember "type" for the final response -->
+    }
+</script>

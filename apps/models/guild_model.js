@@ -23,7 +23,7 @@ GuildModel =  module.exports = function(environment) {
     self.fillDatatable = function(start, count, userId, userIP, sToken, callback) {
         console.log("GuildModel.fillDatatable "+userId);
         topicDriver.listInstanceTopics(Constants.GUILD_TYPE, start, count,
-          Constants.SORT_LABEL, Constants.ASC_DIR,
+            Constants.SORT_LABEL, Constants.ASC_DIR,
             userId, userIP, sToken, function bmF(err, rslt) {
           console.log("LISTGUILDS "+err+" | "+JSON.stringify(rslt));
           return callback(err, rslt, 0, 0);
@@ -39,8 +39,8 @@ GuildModel =  module.exports = function(environment) {
             lang = json.language;
         if (!lang) { lang = "en";}
         CommonModel.createTopicInstance(null, Constants.GUILD_TYPE, userId,
-              json.title, json.body, lang, Constants.GUILD, Constants.GUILD_SM,
-              false, null, pivots, userIP, sToken, function umC(err, rslt) {
+                json.title, json.body, lang, Constants.GUILD, Constants.GUILD_SM,
+                false, null, pivots, userIP, sToken, function umC(err, rslt) {
           return callback(err, rslt);
         });
     };

@@ -1,0 +1,84 @@
+<link rel="stylesheet" href="/css/theme.css" type="text/css" media="all" />
+<script type="text/javascript" src="/js/columns.js"></script>
+<script type="text/javascript">
+
+  $(document).ready( function() { $("div.columns").millerColumns(); });
+
+  <!-- TODO this is a placeholder for testing -->
+  function loadNode(lox) {
+      var x = document.getElementById("selectedNode");
+      x.style.display = "block";
+      alert(lox);
+  }
+
+</script>
+<div class="col-xs-12">
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#meta">MetaRoom</a></li>
+        <li><a data-toggle="tab" href="#tree">GameTree</a></li>
+        <li><a data-toggle="tab" href="#roster">Roster</a></li>
+        {{#if isGuildLeader}}
+          <li><a data-toggle="tab" href="#leader">Leader</a></li>
+        {{/if}}
+    </ul>
+
+    <div class="tab-content">
+      <!-- game room (incubator) where the guild meets -->
+      <div id="meta" class="tab-pane fade in active">
+        <!-- MillerColumn -->
+        <div class="columns" tabindex="1">
+          {{{myTree}}}
+        </div>
+      </div>
+
+      <!-- view of the game move tree itself -->
+      <div id="tree" class="tab-pane fade">
+        <h2>Game Tree Goes Here</h2>
+      </div>
+      <!-- guild roster -->
+      <div id="roster" class="tab-pane fade">
+        <h2>Roster</h2>
+        {{#each members}}
+          <a href="/user/{{lox}}"><img src="{{sIco}}"> {{label}}</a><br/>
+        {{/each}}
+      </div>
+      <!-- guild leader controls -->
+      <div id="leader" class="tab-pane fade">
+        <h2>Leader Activities</h2>
+        <div class="form-group">
+            <a href="/selectrootnode/{{guildId}}" class="btn btn-large btn-primary">Select Root Node</a><br/><br/>
+            <a href="/playmoves/{{guildId}}" class="btn btn-large btn-primary">Play Moves</a>
+            <!--TODO add forms for adding/removing leaders/members -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- hide until node selected -->
+  <div id="selectedNode"style="display: none;" >
+    <h3>Selected Node</h3>
+    <div id="imglabel"></div>
+    <div id="authorname"></div>
+    <div id="datetime"></div>
+    <div id="permalink"></div>
+    <div class="tab-pane">
+      <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#details">Details</a></li>
+        <li><a data-toggle="tab" href="#edit">Edit</a></li>
+        <li><a data-toggle="tab" href="#respond">Respond</a></li>
+      </ul>
+      <div class="tab-content">
+        <div  class="tab-pane" id="details">
+          <div class="body pre-scrollable span12" style="border: 1px solid #e1e1e8; resize:both;overflow: auto;">
+          </div>
+        </div>
+        <div  class="tab-pane" id="edit">
+          Not implemented yet
+        </div>
+        <div  class="tab-pane" id="respond">
+            {{> meta_new_node_form}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
