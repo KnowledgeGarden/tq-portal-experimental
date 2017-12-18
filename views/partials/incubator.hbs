@@ -14,12 +14,13 @@
 </script>
 <div class="col-xs-12">
     <ul class="nav nav-tabs">
-        <li class="active"><a data-toggle="tab" href="#meta">MetaRoom</a></li>
-        <li><a data-toggle="tab" href="#tree">GameTree</a></li>
-        <li><a data-toggle="tab" href="#roster">Roster</a></li>
+        <li class="active"><a data-toggle="tab" href="#meta"><b>MetaRoom</b></a></li>
+        <li><a data-toggle="tab" href="#tree"><b>GameTree</b></a></li>
+        <li><a data-toggle="tab" href="#roster"><b>Roster</b></a></li>
         {{#if isGuildLeader}}
-          <li><a data-toggle="tab" href="#leader">Leader</a></li>
+          <li><a data-toggle="tab" href="#leader"><b>Leader</b></a></li>
         {{/if}}
+        <li><a data-toggle="tab" href="#aboutgc"><b>About Guild Craft</b></a></li>
     </ul>
 
     <div class="tab-content">
@@ -51,6 +52,10 @@
             <!--TODO add forms for adding/removing leaders/members -->
         </div>
       </div>
+      <div id="aboutgc" class="tab-pane fade">
+        {{> about_guildcraft}}
+      </div>
+
     </div>
   </div>
   <!-- hide until node selected -->

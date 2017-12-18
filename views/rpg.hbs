@@ -3,9 +3,10 @@
     <div id="guilddata"  start="{{gstart}}" count="{{gcount}}" total="{{gtotal}}"></div>
 
     <ul class="nav nav-tabs">
-        <li class="active"><a data-toggle="tab" href="#quests">Quests</a></li>
-        <li><a data-toggle="tab" href="#guilds">Guilds</a></li>
-    </ul>
+        <li class="active"><a data-toggle="tab" href="#quests"><h4>Quests</h4></a></li>
+        <li><a data-toggle="tab" href="#guilds"><h4>Guilds</h4></a></li>
+        <li><a data-toggle="tab" href="#about"><h4>About</h4></a></li>
+     </ul>
     <div class="tab-content">
 
         <div id="quests" class="tab-pane fade in active">
@@ -59,6 +60,9 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div id="about" class="tab-pane fade">
+            {{> about_rpg}}
         </div>
     </div>
 </div>

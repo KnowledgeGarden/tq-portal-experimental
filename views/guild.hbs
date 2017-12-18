@@ -2,11 +2,12 @@
     <img src="/images/game/guild.png" />
     <h2>{{label}}</h2>
     <ul class="nav nav-tabs">
-        <li class="active"><a data-toggle="tab" href="#topic">Guild</a></li>
+        <li class="active"><a data-toggle="tab" href="#topic"><h5>Guild</h5></a></li>
         {{#if isGuildMember}}
-            <li><a data-toggle="tab" href="#groom">Guild Room</a></li>
+            <li><a data-toggle="tab" href="#groom"><h5>Guild Room</h5></a></li>
         {{/if}}
-    </ul>
+     <!--   <li><a data-toggle="tab" href="#aboutgld"><h5>About Guilds</h5></a></li>-->
+     </ul>
 
     <div class="tab-content">
         <div id="topic" class="tab-pane fade in active">
@@ -30,6 +31,9 @@
             <!-- painting guild.hbs means also painting incubator.hbs -->
             {{> incubator }}
         </div>
+        <!--<div id="aboutgld" class="tab-pane fade">
+            {{> about_guild}}
+        </div>-->
     </div>
 
 </div>

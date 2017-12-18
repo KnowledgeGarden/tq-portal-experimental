@@ -1,27 +1,40 @@
 <div class="home col-xs-12 ">
-  <h1>Blog Central!</h1>
-  {{#if isAuthenticated}}
-      <div class="form-group">
-          <a href="/blognew"><button type="submit" class="btn btn-btn-success btn-small">New Post</button></a><br />
-      </div>
-  {{/if}}
+    <h1>Blog Central!</h1>
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#blogs"><h4>Blog Posts</h4></a></li>
+        <li><a data-toggle="tab" href="#aboutbg"><h4>About Blogs</h4></a></li>
+    </ul>
 
-  <div class="col-xs-10 pre-scrollable"  style="border: 1px solid #e1e1e8;"> <!-- position:"left"; -->
-      <div class="tableindex">
-          <!-- TODO paint the table here -->
-          {{#each cargo}}
-              <a href="/blog/{{lox}}"><img src="{{sIco}}"> {{label}}</a><br/>
-          {{/each}}
-      </div>
-  </div>
-  <div class="col-xs-12"> <!-- position:"left"; -->
-      <div class="pagination">
-        {{#if start}}
-          <a href="/blognext/{{start}}">Next</a>&nbsp;&nbsp;&nbsp;
-        {{/if}}
-        {{#if ret}}
-          <a href="/blogprev/{{ret}}">Previous</a>
-        {{/if}}
-      </div>
-  </div>
+    <div class="tab-content">
+        <div id="blogs" class="tab-pane fade in active">
+
+            {{#if isAuthenticated}}
+                <div class="form-group">
+                    <a href="/blognew"><button type="submit" class="btn btn-btn-success btn-small">New Post</button></a><br />
+                </div>
+            {{/if}}
+
+            <div class="col-xs-10 pre-scrollable"  style="border: 1px solid #e1e1e8;"> <!-- position:"left"; -->
+                <div class="tableindex">
+                    <!-- TODO paint the table here -->
+                    {{#each cargo}}
+                        <a href="/blog/{{lox}}"><img src="{{sIco}}"> {{label}}</a><br/>
+                    {{/each}}
+                </div>
+            </div>
+            <div class="col-xs-12"> <!-- position:"left"; -->
+                <div class="pagination">
+                    {{#if start}}
+                    <a href="/blognext/{{start}}">Next</a>&nbsp;&nbsp;&nbsp;
+                    {{/if}}
+                    {{#if ret}}
+                    <a href="/blogprev/{{ret}}">Previous</a>
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+        <div id="aboutbg" class="tab-pane fade">
+            {{> about_blog}}
+        </div>
+    </div>
 </div>

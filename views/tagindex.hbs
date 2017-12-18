@@ -1,21 +1,34 @@
 <div class="home col-xs-12 ">
-  <h1>Tag Central!</h1>
-  <div class="col-xs-10 pre-scrollable"  style="border: 1px solid #e1e1e8;"> <!-- position:"left"; -->
-      <div class="tableindex">
-          <!-- TODO paint the table here -->
-          {{#each cargo}}
-              <a href="/tag/{{lox}}"><img src="{{sIco}}"> {{label}}</a><br/>
-          {{/each}}
-      </div>
-  </div>
-  <div class="col-xs-12"> <!-- position:"left"; -->
-      <div class="pagination">
-        {{#if start}}
-          <a href="/tagnext/{{start}}">Next</a>&nbsp;&nbsp;&nbsp;
-        {{/if}}
-        {{#if ret}}
-        <a href="/tagprev/{{ret}}">Previous</a>
-        {{/if}}
-      </div>
-  </div>
+    <h1>Tag Central!</h1>
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#tags"><h4>Tags</h4></a></li>
+        <li><a data-toggle="tab" href="#aboutt"><h4>About Tags</h4></a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div id="tags" class="tab-pane fade in active">
+
+            <div class="col-xs-10 pre-scrollable"  style="border: 1px solid #e1e1e8;"> <!-- position:"left"; -->
+                <div class="tableindex">
+                    <!-- TODO paint the table here -->
+                    {{#each cargo}}
+                        <a href="/tag/{{lox}}"><img src="{{sIco}}"> {{label}}</a><br/>
+                    {{/each}}
+                </div>
+            </div>
+            <div class="col-xs-12"> <!-- position:"left"; -->
+                <div class="pagination">
+                    {{#if start}}
+                    <a href="/tagnext/{{start}}">Next</a>&nbsp;&nbsp;&nbsp;
+                    {{/if}}
+                    {{#if ret}}
+                    <a href="/tagprev/{{ret}}">Previous</a>
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+        <div id="aboutt" class="tab-pane fade">
+            {{> about_tag}}
+        </div>
+    </div>
 </div>

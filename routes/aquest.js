@@ -53,7 +53,6 @@ exports.plugin = function(app, environment) {
             //now guild
             start = helpers.validateNumber(parseInt(req.query.gstart));
             count = helpers.validateCount(parseInt(req.query.gcount));
-console.log("GM "+start+" | "+count+" | "+userId+" | "+userIP+" | "+sToken);
             GuildModel.fillDatatable(start, count, userId, userIP, sToken, function guildFill(err, gdata, countsent, totalavailable) {
                 console.log("Guild.index " + gdata);
                 cursor = start + countsent;
