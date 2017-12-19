@@ -67,8 +67,8 @@ exports.plugin = function(app, environment) {
         credentials = c;
       }
       user.uRole = credentials; //TODO set back in session?
-      //NOTE: BacksideServlet uses uName, not uId for methods like this
-      AdminModel.addUserRole(user.uName, guildId, function gA(err, rslt) {
+      //TODO to reset session, need req in signature
+      AdminModel.addUserRole(user.uId, gid, function gA(err, rslt) {
         console.log("ADDEDMEMBER "+err);
         return callback(err);
       });
@@ -85,16 +85,17 @@ exports.plugin = function(app, environment) {
       }
       if (Array.isArray(credentials)) {
         credentials.push(gid);
-        //console.log("ADDINGLEADER-1 "+credentials+" | "+OWNER_LEADER);
+        console.log("ADDINGLEADER-1 "+credentials+" | "+OWNER_LEADER);
       } else {
         var c = [];
         c.push(credentials);
         c.push(gid);
         credentials = c;
-        //console.log("ADDINGLEADER-2 "+credentials+" | "+OWNER_LEADER);
+        console.log("ADDINGLEADER-2 "+credentials+" | "+LEADER);
       }
       user.uRole = credentials; //TODO set back in session?
-      AdminModel.addUserRole(user.uName, gid, function gA(err, rslt) {
+      //TODO to reset session, need req in signature
+      AdminModel.addUserRole(user.uId, gid, function gA(err, rslt) {
         console.log("ADDEDLEADER "+err);
         return callback(err);
       });
@@ -192,7 +193,7 @@ exports.plugin = function(app, environment) {
           //TODO  alert stuff
           console.log("DANG "+q);
           req.flash("error", "Cannot get "+q);
-          res.redirect("/");
+          return res.redirect("/");
       }
     });
 
@@ -210,7 +211,7 @@ exports.plugin = function(app, environment) {
 
       } else {
         req.flash("error", "Cannot join "+q);
-        res.redirect("/");
+        return res.redirect("/");
       }
     });
 
@@ -229,17 +230,7 @@ exports.plugin = function(app, environment) {
     ///////////////////////////////
     // Guild leader functions
     ///////////////////////////////
-    app.get("/selectrootnode/:id", function(req, res) {
-      var q = req.params.id;
-      console.log("SELROOT "+q);
-      //TODO
-    });
 
-    app.get("/playmoves/:id", function(req, res) {
-      var q = req.params.id;
-      console.log("PLAY "+q);
-      //TODO
-    });
 
     var _guildsupport = function (body, user, userIP, sToken, callback) {
         if (body.locator === "") {

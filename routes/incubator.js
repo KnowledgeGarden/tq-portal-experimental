@@ -32,6 +32,101 @@ exports.plugin = function(app, environment) {
         //TODO anything we might want to do here
         res.redirect('/issue');
     });
+    ///////////////////////////
+    // NOTE:
+    //  Remembering means that an authenticated user, visiting some node,
+    //  clicks on the Remember button. This action saves the node to a
+    //  local clipboard
+    //  We use req.session.transclude for the Remember button
+    //  @see /routes/conversation.js /remember/:id
+    //////////////////////////
+    /**
+     * Requires that a Remembered Quest NodeId is available
+     */
+    app.get("/incubator/selectrootnode/:id", function(req, res) {
+        var q = req.params.id,
+            selectedId = req.session.transclude;
+//        console.log("SELROOT ", q, selectedId);
+        //TODO
+        req.flash("error", "SelectRoot "+q+" "+selectedId);
+        return res.redirect("/");
+
+      });
+  
+    app.get("/incubator/playmoves/:id", function(req, res) {
+        var q = req.params.id;
+        //TODO
+        req.flash("error", "Play "+q);
+        return res.redirect("/");
+    });
+
+    app.get("/incubator/startmeta/:id", function(req, res) {
+        var q = req.params.id;
+        //TODO
+        req.flash("error", "StartMetaConversation "+q);
+        return res.redirect("/");
+    });
+
+
+    /**
+     * Requires that a Remembered QuestId is available
+     */
+    app.get("/incubator/joinquest/:id", function(req, res) {
+        var q = req.params.id,
+            selectedId = req.session.transclude;
+//        console.log("JoinQuest ", q, selectedId);
+        //TODO
+        req.flash("error", "JoinQuest "+q+" "+selectedId);
+        return res.redirect("/");
+    });
+
+    /**
+     * Requires that a Remembered UserId is available
+     */
+    app.get("/incubator/addleader/:id", function(req, res) {
+        var q = req.params.id,
+            selectedId = req.session.transclude;
+//        console.log("PLAY ", q, selectedId);
+        //TODO
+        req.flash("error", "AddLeader "+q+" "+selectedId);
+        return res.redirect("/");
+    });
+
+    /**
+     * Requires that a Remembered UserId is available
+     */
+    app.get("/incubator/removeleader/:id", function(req, res) {
+        var q = req.params.id,
+            selectedId = req.session.transclude;
+//        console.log("RemoveLeader ", q, selectedId);
+        //TODO
+        req.flash("error", "RemoveLeader "+q+" "+selectedId);
+        return res.redirect("/");
+    });
+
+    /**
+     * Requires that a Remembered UserId is available
+     */
+    app.get("/incubator/addmember/:id", function(req, res) {
+        var q = req.params.id,
+            selectedId = req.session.transclude;
+//        console.log("PLAY "+q);
+        //TODO
+        req.flash("error", "RemoveLeader "+q+" "+selectedId);
+        return res.redirect("/");
+    });
+
+    /**
+     * Requires that a Remembered UserId is available
+     */
+    app.get("/incubator/removemember/:id", function(req, res) {
+        var q = req.params.id,
+            selectedId = req.session.transclude;
+//        console.log("PLAY "+q);
+        //TODO
+        req.flash("error", "RemoveLeader "+q+" "+selectedId);
+        return res.redirect("/");
+    });
 
     ///////////////////////////////////////////////////////
     // Conversation facade

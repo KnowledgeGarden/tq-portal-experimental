@@ -47,9 +47,18 @@
       <div id="leader" class="tab-pane fade">
         <h2>Leader Activities</h2>
         <div class="form-group">
-            <a href="/selectrootnode/{{guildId}}" class="btn btn-large btn-primary">Select Root Node</a><br/><br/>
-            <a href="/playmoves/{{guildId}}" class="btn btn-large btn-primary">Play Moves</a>
-            <!--TODO add forms for adding/removing leaders/members -->
+          <h4>Quest Related</h4>
+            <a href="/incubator/startmeta/{{guildId}}" class="btn btn-large btn-primary">Start a MetaConversation</a><br/><br/>
+            <a href="/incubator/joinquest/{{guildId}}" class="btn btn-large btn-primary">Select Root Node</a>
+            <a href="/incubator/selectrootnode/{{guildId}}" class="btn btn-large btn-primary">Select Root Node</a><br/><br/>
+            <a href="/incubator/playmoves/{{guildId}}" class="btn btn-large btn-primary">Play Moves</a><br/><br/>
+            <!--TODO add forms for adding/removing leaders/members 
+              These should be turned into forms where the userId is pasted in-->
+          <h4>Membership Related</h4>
+            <a href="/incubator/addleader/{{guildId}}" class="btn btn-large btn-primary">Add Leader</a>
+            <a href="/incubator/removeleader/{{guildId}}" class="btn btn-large btn-primary">Remove Leader</a><br/><br/>
+            <a href="/incubator/addmember/{{guildId}}" class="btn btn-large btn-primary">Add Member</a>
+            <a href="/incubator/removemember/{{guildId}}" class="btn btn-large btn-primary">Remove Member</a>
         </div>
       </div>
       <div id="aboutgc" class="tab-pane fade">
