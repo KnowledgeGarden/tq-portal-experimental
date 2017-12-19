@@ -46,7 +46,6 @@ exports.plugin = function(app, environment) {
     app.get("/incubator/selectrootnode/:id", function(req, res) {
         var q = req.params.id,
             selectedId = req.session.transclude;
-//        console.log("SELROOT ", q, selectedId);
         //TODO
         req.flash("error", "SelectRoot "+q+" "+selectedId);
         return res.redirect("/");
@@ -60,6 +59,21 @@ exports.plugin = function(app, environment) {
         return res.redirect("/");
     });
 
+    /////////////////////////////////
+    // Metaconversations come in varieties:
+    //  1- general conversation to choose a quest to join
+    //  2- game move planning for a particular quest:
+    //      one conversation per game move; new conversation
+    //      for subsequent game moves
+    // If CurrentQuest is null, it's type {1}
+    // If CurrentQuest is not null, it's type {2}
+    /////////////////////////////////
+
+    /**
+     * Start a meta conversation with a pre-defined template
+     * Question node; identify the conversation with a GUID
+     * but include attributes which are the guildId.
+     */
     app.get("/incubator/startmeta/:id", function(req, res) {
         var q = req.params.id;
         //TODO
@@ -74,19 +88,27 @@ exports.plugin = function(app, environment) {
     app.get("/incubator/joinquest/:id", function(req, res) {
         var q = req.params.id,
             selectedId = req.session.transclude;
-//        console.log("JoinQuest ", q, selectedId);
         //TODO
         req.flash("error", "JoinQuest "+q+" "+selectedId);
         return res.redirect("/");
     });
 
+    /////////////////////////
+    // Backside makes JSONObject structs of this kind:
+    // {userId, guildId, role}
+    //  where role is one of "member" or "leader"
+    // Backside will return an error if anyone tries to
+    //  remove the guild's owner as member or leader
+    /////////////////////////
+    // Backside stores member structs on GuildMemberList
+    // Backside stores current quest identity on GuildCurrentQuest
+    /////////////////////////
     /**
      * Requires that a Remembered UserId is available
      */
     app.get("/incubator/addleader/:id", function(req, res) {
         var q = req.params.id,
             selectedId = req.session.transclude;
-//        console.log("PLAY ", q, selectedId);
         //TODO
         req.flash("error", "AddLeader "+q+" "+selectedId);
         return res.redirect("/");
@@ -98,7 +120,6 @@ exports.plugin = function(app, environment) {
     app.get("/incubator/removeleader/:id", function(req, res) {
         var q = req.params.id,
             selectedId = req.session.transclude;
-//        console.log("RemoveLeader ", q, selectedId);
         //TODO
         req.flash("error", "RemoveLeader "+q+" "+selectedId);
         return res.redirect("/");
@@ -110,7 +131,6 @@ exports.plugin = function(app, environment) {
     app.get("/incubator/addmember/:id", function(req, res) {
         var q = req.params.id,
             selectedId = req.session.transclude;
-//        console.log("PLAY "+q);
         //TODO
         req.flash("error", "RemoveLeader "+q+" "+selectedId);
         return res.redirect("/");
@@ -122,7 +142,6 @@ exports.plugin = function(app, environment) {
     app.get("/incubator/removemember/:id", function(req, res) {
         var q = req.params.id,
             selectedId = req.session.transclude;
-//        console.log("PLAY "+q);
         //TODO
         req.flash("error", "RemoveLeader "+q+" "+selectedId);
         return res.redirect("/");
@@ -199,31 +218,45 @@ exports.plugin = function(app, environment) {
             userId = req.session[Constants.USER_ID],
             userIP = "",
             theUser = helpers.getUser(req),
+            userLocator = theUser.uId,
             sToken = req.session[Constants.SESSION_TOKEN],
             error = "";
-        CommonModel.fetchTopic(guildLocator, userId, userIP, sToken, function uFT(err, guildnode) {            if (err) {error += err;}
+        CommonModel.fetchTopic(guildLocator, userLocator, userIP, sToken, function uFT(err, guildnode) {            if (err) {error += err;}
             var isldr = IncubatorModel.isLeader(guildnode, userLocator);
             //sanith check
             if (isldr) {
-                IncubatorModel.joinQuest(guildnode, questLocator, usx, function(err) {
+                IncubatorModel.joinQuest(guildLocator, questLocator, userLocator, userIP, sToken, function(err) {
                     if (err) {error += err;}
-                    return res.redirect("/incubator/"+guildLocator);
+                    return res.redirect("/guild/"+guildLocator);
                 });
             } else {
-                //TODO should redirect to 500 with error message
+                res.flash("error", "Wrong credentials for joining a quest");
                 return res.redirect("/");
             }
             
         });
     });
    
-       
+    /**
+     * <p>From an Incubator:Leader button</p>
+     * <p>
+     * This must accomplish the following:<br/>
+     * <li>Fetch the guild topic</li>
+     * <li>Fetch the selected rootNode</li>
+     * <li>Fabricate a faux GameMoveRootNode on which to build the game move</li>
+     * <li>Somehow, make a record of the root node; needs to be recorded
+     * somewhere -- another property in the guild proxy; this means there
+     * are a pair being covered: {currentQuestId, currentRootNodeId}</li>
+     * </p>
+     */   
     app.post('/incubator/selectrootnode', helpers.isPrivate, function(req, res) {
             var guildLocator = req.body.guildlocator,
+            //TODO: this is really a Remembered value
             rootLocator = req.body.nodelocator,
             userId = req.session[Constants.USER_ID],
             userIP = "",
             theUser = helpers.getUser(req),
+            userLocator = theUser.uId,
             sToken = req.session[Constants.SESSION_TOKEN],
             error = "";
         CommonModel.fetchTopic(guildLocator, userId, userIP, sToken, function uFT(err, guildnode) {
@@ -231,7 +264,7 @@ exports.plugin = function(app, environment) {
             var isldr = IncubatorModel.isLeader(guildnode, userLocator);
             //sanith check
             if (isldr) {
-                IncubatorModel.setQuestRootNodeLocator(guildnode, rootLocator, usx, function(err) {
+                IncubatorModel.setQuestRootNodeLocator(guildnode, rootLocator, userLocator, userIP, sToken, function(err) {
                     if (err) {error += err;}
                     return res.redirect("/incubator/"+guildLocator);
                 });

@@ -60,6 +60,9 @@ module.exports.ADD_LEADER			=         "AddLeader";
 module.exports.REMOVE_LEADER		=       "RemoveLeader";
 module.exports.ADD_MEMBER			=         "AddMember";
 module.exports.REMOVE_MEMBER		=       "RemoveMember";
+module.exports.SET_CURRENT_QUEST	    =   "SetCurQuest";
+module.exports.SET_CURRENT_ROOT_ID	= "SetCurRootId";
+module.exports.JOIN_QUEST			= "JoinQuest";
 
 //NODE PROPERTIES
 module.exports.CREATORID_PROP =         "crtr";
