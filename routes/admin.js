@@ -72,7 +72,10 @@ exports.plugin = function(app, environment) {
               data.homepage = cargo.uHomepage;
               var lat = "",
                   lng = "";
-              var gl = cargo.uGeoloc.trim();
+              var gl = cargo.uGeoloc;
+              if (gl) {
+                  gl = gl.trim();
+              }
               var len = gl.length;
               if (len > 10) {
                   var where = gl.indexOf("|");

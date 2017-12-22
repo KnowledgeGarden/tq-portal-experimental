@@ -2,7 +2,10 @@
   "name": "tq-portal-experimental",
   "version": "0.1.0",
   "main": "app.js",
-  "authors": [ "park", "wenzowski" ],
+  "authors": [
+    "park",
+    "wenzowski"
+  ],
   "license": "Apache 2",
   "repository": {
     "type": "git",
