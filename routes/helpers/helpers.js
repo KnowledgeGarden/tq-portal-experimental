@@ -6,7 +6,8 @@ var Constants = require("../../apps/constants"),
 
 Helpers =  module.exports = function (environment) {
     var self = this,
-        isPrivatePortal = environment.getIsPrivatePortal();
+        isPrivatePortal = environment.getIsPrivatePortal(),
+        _isPrivateBehavior = environment.getConfigProperties.isPrivateBehavior;
 
     self.isPrivate = function (req, res, next) {
         if (isPrivatePortal) {
@@ -31,6 +32,12 @@ Helpers =  module.exports = function (environment) {
         return res.redirect("/");
     };
 
+    /**
+     * If true, then new objects default to private
+     */
+    self.isPrivateBehavior = function () {
+        return _isPrivateBehavior;
+    }
 
     self.isAdmin = function (req, res, next) {
         var theUser = req.session[Constants.THE_USER];

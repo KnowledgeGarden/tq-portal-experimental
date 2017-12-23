@@ -4,6 +4,7 @@
   "brand": "TopicQuests Portal",
   "portalIsPrivate": false,
   "invitationOnly": false,
+  "defaultPrivateBehavior": false,
   "backsideHost" : "localhost",
   "backsidePort" : "8888",
   "backsideProtocol" : "http"
